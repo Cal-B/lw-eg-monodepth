@@ -9,8 +9,9 @@ data_path_='/groups/ditzler/'
 
 
 model_name="$(printf '%s_%s_%dx%d' ${dataset_%} ${encoder_%} ${batch_%} ${epoch_%})"
-loss_weights = 
+loss_weights = "$(printf '\nAppearance: %g, Disparity smoothness: %g, Left-right consistency: %g\n' $1 $2 $3)"
 echo ">>> ${model_name}"
+echo "${loss_weights}"
 
 singularity run --nv /xdisk/ditzler/mig2020/rsgrps/ditzler/kspeng/envImg/tfcvpy36tf15.img \
 monodepth_main.py --mode train \
