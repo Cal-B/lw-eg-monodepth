@@ -37,6 +37,7 @@ parser.add_argument('--input_width',               type=int,   help='input width
 parser.add_argument('--batch_size',                type=int,   help='batch size', default=8)
 parser.add_argument('--num_epochs',                type=int,   help='number of epochs', default=50)
 parser.add_argument('--learning_rate',             type=float, help='initial learning rate', default=1e-4)
+parser.add_argument('--appearance_loss_weight',    type=float, help='reconstructed image similarity to input weight', default=1.0)
 parser.add_argument('--lr_loss_weight',            type=float, help='left-right consistency weight', default=1.0)
 parser.add_argument('--alpha_image_loss',          type=float, help='weight between SSIM and L1 in the image loss', default=0.85)
 parser.add_argument('--disp_gradient_loss_weight', type=float, help='disparity smoothness weigth', default=0.5)
@@ -252,6 +253,7 @@ def main(_):
         wrap_mode=args.wrap_mode,
         use_deconv=args.use_deconv,
         alpha_image_loss=args.alpha_image_loss,
+        appearance_loss_weight = args.appearance_loss_weight,
         disp_gradient_loss_weight=args.disp_gradient_loss_weight,
         lr_loss_weight=args.lr_loss_weight,
         full_summary=args.full_summary)
