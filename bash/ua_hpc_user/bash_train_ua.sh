@@ -5,12 +5,12 @@ epoch_=100
 alpha_image_loss_=0.85
 disp_gradient_loss_weight_=0.5
 dataset_='kitti'
-data_path_='/xdisk/ditzler/mig2020/rsgrps/ditzler/kspeng/workspace/dataset/'
+data_path_='/groups/ditzler/'
 
 model_name="$(printf '%s_%s_%dx%d' ${dataset_%} ${encoder_%} ${batch_%} ${epoch_%})"
 echo ">>> ${model_name}"
 
-singularity run --nv /xdisk/ditzler/mig2020/rsgrps/ditzler/kspeng/envImg/tfcvpy36tf15.img \
+singularity run --nv /groups/ditzler/envImg/tfcvpy36tf15.img \
 monodepth_main.py --mode train \
 --data_path "$(printf '%s%s/data/' ${data_path_%} ${dataset_%})" \
 --filenames_file "$(printf 'utils/filenames/ua_train_files.txt' ${dataset_%})" \
