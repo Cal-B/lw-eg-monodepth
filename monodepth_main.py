@@ -19,6 +19,7 @@ import re
 import time
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
+import sys
 
 from monodepth_model import *
 from monodepth_dataloader import *
@@ -180,6 +181,7 @@ def train(params):
 def test(params):
     """Test function."""
 
+    print("\nLoading images at " + args.data_path+"\n")
     dataloader = MonodepthDataloader(args.data_path, args.filenames_file, params, args.dataset, args.mode)
     left  = dataloader.left_image_batch
     right = dataloader.right_image_batch
@@ -194,6 +196,7 @@ def test(params):
     # SAVER
     train_saver = tf.train.Saver()
 
+
     # INIT
     sess.run(tf.global_variables_initializer())
     sess.run(tf.local_variables_initializer())
@@ -207,7 +210,9 @@ def test(params):
         restore_path = args.checkpoint_path.split(".")[0]
     train_saver.restore(sess, restore_path)
 
-    num_test_samples = count_text_lines(args.filenames_file)
+    # num_test_samples = count_text_lines(args.filenames_file)
+    
+    num_test_samples = 30
 
     print('now testing {} files'.format(num_test_samples))
     disparities     = np.zeros((num_test_samples, params.height, params.width), dtype=np.float32)

@@ -3,6 +3,7 @@ import cv2
 import argparse
 from evaluation_utils import *
 
+
 parser = argparse.ArgumentParser(description='Evaluation on the KITTI dataset')
 parser.add_argument('--split',               type=str,   help='data split, kitti or eigen',         required=True)
 parser.add_argument('--predicted_disp_path', type=str,   help='path to estimated disparities',      required=True)
@@ -16,13 +17,16 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
 
+    print("\nloading predicted disp\n")
     pred_disparities = np.load(args.predicted_disp_path)
 
     if args.split == 'kitti':
         num_samples = 200
         
         gt_disparities = load_gt_disp_kitti(args.gt_path)
+        print("\nDISPARITES LOADED!\n")
         gt_depths, pred_depths, pred_disparities_resized = convert_disps_to_depths_kitti(gt_disparities, pred_disparities)
+        print("\ndepths LOADED!\n")
 
     elif args.split == 'eigen':
         num_samples = 697
@@ -47,6 +51,7 @@ if __name__ == '__main__':
 
             pred_depths.append(depth_pred)
 
+    sys.stderr.write("\nSetting zeroes for eval\n")
     rms     = np.zeros(num_samples, np.float32)
     log_rms = np.zeros(num_samples, np.float32)
     abs_rel = np.zeros(num_samples, np.float32)
