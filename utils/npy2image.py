@@ -12,17 +12,19 @@ from PIL import Image
 
 save_source = not True
 postproc = True
-surfix = ''
+surfix = '_ppp'
 
 ## setup root path
-model_name = 'kitti_resASPP_8x100'
-path2root   = '../models/{}/'.format(model_name)
-path2out = path2root + 'kitti/' 
+model_name = 'kitti_vggASPP_8x100_Ccor_25'
+path2root   = '/home/u22/cpbarrett/lw-eg-monodepth/models/{}/'.format(model_name)
+path2out = path2root + 'dashcam4_ppp/'
+print("Outputting disps to: " + path2out)
 if not os.path.exists(path2out):
+    print("Making output path: " + path2out)
     os.makedirs(path2out)
 
 ## load npy
-path2npy    = path2root + "disparities{}.npy".format(surfix)
+path2npy    = "/home/u22/cpbarrett/lw-eg-monodepth/models/kitti_vggASPP_8x100_Ccor_25/disparities{}.npy".format(surfix)
 
 npy         = np.load(path2npy)
 
@@ -33,7 +35,8 @@ for n in np.arange(num):
     npy_    = npy[n,:-10,:]
     npy_    = np.array(Image.fromarray(npy_).resize([1242,375], Image.BILINEAR))#LANCZOS))  
 
-    plt.imsave(os.path.join(path2out, "{}_disp.png".format(fName)), npy_, cmap='plasma')
+    plt.imsave(os.path.join(path2out,
+    "{}_disp.png".format(fName)), npy_, cmap='plasma')
 
     if n % 10 == 0:
         print("Status: {}%".format(np.round(n/num*100,2)))
