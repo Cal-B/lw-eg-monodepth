@@ -21,7 +21,7 @@ This branch is used to load custom datasets into the model and generate the resu
 6. Run the evaluate script (`sh bash/ua_hpc_user/bash_evalute_kitti_ua_25.sh`) to generate the .npy disparity files 
 7. Edit the `utils/npy2image.py` script to list the correct model & model directory you are using, and where to output the resulting frames
 8. Edit the `surfix` arg in `npy2image.py` to apply post-processing. The available options are `''` for no post-processing, `'_pp'` for traditional post-processing, and `'_ppp'` for edge-guided post-processing. The latter is generally the most accurate to ground-truth data. 
-9. `python3 utils/npy2image.py` will start generating the filtered frames as the designated output directory
+9. `python3 utils/npy2image.py` will start generating the filtered frames at the designated output directory
 10. Use `python3 frames2video.py -d /directory/to/filtered/frames/ -e png -fps 30 -o assembled_vid.mp4` to generate a video from the provided frames 
 
 ## Main Contributions
