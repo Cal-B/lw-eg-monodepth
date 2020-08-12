@@ -9,6 +9,20 @@ This is the implementation of the paper: Light-Weight Edge-Guided Self-supervise
     year={2019}}
 ```
 
+## Changes from main project / branch
+This branch is used to load custom datasets into the model and generate the resulting frames. Here is the workflow:
+0. Train the model using the provided training scripts, on a dataset like KITTI 2015. 
+1. Generate your frames using a program like FFMPEG (`ffmpeg -i input.mp4 -r 30/1 out%03d.png`) and place them in an accessible directory 
+2. Use a command like `ls directory/to/frames/ > filenames.txt` to generate a simple list of filenames, one name per line
+3. Place this in the `utils/filenames/` folder and edit the corresponding path in your training script using the `--filenames_file` arg
+4. Edit the `data_path_` arg in your evaluation script to list the parent directory path to your dataset
+5. Edit the `dataset_` arg in your evaluation script to the folder name that holds your frame files
+6. Run the evaluate script (`sh bash/ua_hpc_user/bash_evalute_kitti_ua_25.sh`) to generate the .npy disparity files 
+7. Edit the `utils/npy2image.py` script to list the correct model & model directory you are using, and where to output the resulting frames
+8. Edit the `surfix` arg in `npy2image.py` to apply post-processing. The available options are `''` for no post-processing, `'_pp'` for traditional post-processing, and `'_ppp'` for edge-guided post-processing. The latter is generally the most accurate to ground-truth data. 
+9. `python3 utils/npy2image.py` will start generating the filtered frames as the designated output directory
+10. Use `python3 frames2video.py -d /directory/to/filtered/frames/ -e png -fps 30 -o assembled_vid.mp4` to generate a video from the provided frames 
+
 ## Main Contributions
 Our work focus on the network optimization and occlusion fading reduction using post-procssing. We introduce Atrous Spatial Pyramid Pooling (ASPP) module into DispNet to improve the performance and reduce the computational costs including paramters and inference time. The proposed Light-Weight Dispnet is shown as below
 <p align="center">
