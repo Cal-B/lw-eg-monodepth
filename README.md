@@ -16,8 +16,8 @@ This branch is used to load custom datasets into the model and generate the resu
 1. Generate your frames using a program like FFMPEG (`ffmpeg -i input.mp4 -r 30/1 out%03d.png`) and place them in an accessible directory 
 2. Use a command like `ls directory/to/frames/ > filenames.txt` to generate a simple list of filenames, one name per line
 3. Place this in the `utils/filenames/` folder and edit the corresponding path in your training script using the `--filenames_file` arg
-4. Edit the `data_path_` arg in your evaluation script to list the parent directory path to your dataset
-5. Edit the `dataset_` arg in your evaluation script to the folder name that holds your frame files
+4. You only need to run the generation portion of the evaluation script iff your dataset doesn't have ground truth slides. You can comment out all the blocks below the `--mode test` block in the evaluation script.
+5. Edit the `data_path_` arg in your evaluation script to list the parent directory path to your dataset, and the `dataset_` arg to list the folder name that holds your frame files
 6. Run the evaluate script (`sh bash/ua_hpc_user/bash_evalute_kitti_ua_25.sh`) to generate the .npy disparity files 
 7. Edit the `utils/npy2image.py` script to list the correct model & model directory you are using, and where to output the resulting frames
 8. Edit the `surfix` arg in `npy2image.py` to apply post-processing. The available options are `''` for no post-processing, `'_pp'` for traditional post-processing, and `'_ppp'` for edge-guided post-processing. The latter is generally the most accurate to ground-truth data. 
