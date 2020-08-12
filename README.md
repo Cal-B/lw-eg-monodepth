@@ -11,6 +11,7 @@ This is the implementation of the paper: Light-Weight Edge-Guided Self-supervise
 
 ## Changes from main project / branch
 This branch is used to load custom datasets into the model and generate the resulting frames. Here is the workflow:
+
 0. Train the model using the provided training scripts, on a dataset like KITTI 2015. 
 1. Generate your frames using a program like FFMPEG (`ffmpeg -i input.mp4 -r 30/1 out%03d.png`) and place them in an accessible directory 
 2. Use a command like `ls directory/to/frames/ > filenames.txt` to generate a simple list of filenames, one name per line
