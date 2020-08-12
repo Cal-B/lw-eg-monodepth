@@ -35,17 +35,13 @@ width_to_focal[1238] = 718.3351
 
 def load_gt_disp_kitti(path):
     gt_disparities = []
-    print("\nLoading GT disp: " + path + "\n")
-    print(str(os.path.exists("/groups/ditzler/kitti/stereo2015/training/disp_noc_0/")) + ": /groups/ditzler/kitti/stereo2015/training/disp_noc_0/ exists?\n")
     for i in range(200):
-        print(str(os.path.isfile("/groups/ditzler/kitti/stereo2015/training/disp_noc_0/" + str(i).zfill(6) + "_10.png")) + ": /groups/ditzler/kitti/stereo2015/training/disp_noc_0/" + str(i).zfill(6) + "_10.png")
-        disp = cv2.imread("/groups/ditzler/kitti/stereo2015/training/disp_noc_0/" + str(i).zfill(6) + "_10.png", -1)
+        disp = cv2.imread(path + "/training/disp_noc_0/" + str(i).zfill(6) + "_10.png", -1)
         disp = disp.astype(np.float32) / 256
         gt_disparities.append(disp)
     return gt_disparities
 
 def convert_disps_to_depths_kitti(gt_disparities, pred_disparities):
-    print("\nConverting GT disps\n")
     gt_depths = []
     pred_depths = []
     pred_disparities_resized = []
